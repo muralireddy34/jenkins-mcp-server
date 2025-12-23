@@ -53,70 +53,46 @@ Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ## Tools and Usage
 
-### 1. Get Build Status
 
-Get the status of a Jenkins build:
 
-```typescript
-// Example usage
-const result = await mcpClient.useTool("jenkins-server", "get_build_status", {
-  jobPath: "view/xxx_debug",
-  buildNumber: "lastBuild"  // Optional, defaults to lastBuild
-});
-```
 
-Input Schema:
-```json
-{
-  "jobPath": "string",  // Path to Jenkins job
-  "buildNumber": "string"  // Optional, build number or "lastBuild"
-}
-```
 
-### 2. Trigger Build
+### 1. get_build_status
 
-Trigger a new Jenkins build with parameters:
+Retrieves the current status of a Jenkins build, including whether it is running, the result, timestamps, duration, and build URL. Supports fetching the latest build by default.
 
-```typescript
-// Example usage
-const result = await mcpClient.useTool("jenkins-server", "trigger_build", {
-  jobPath: "view/xxx_debug",
-  parameters: {
-    BRANCH: "main",
-    BUILD_TYPE: "debug"
-  }
-});
-```
+### 2. list_all_jobs
 
-Input Schema:
-```json
-{
-  "jobPath": "string",  // Path to Jenkins job
-  "parameters": {
-    // Build parameters as key-value pairs
-  }
-}
-```
+Lists all Jenkins jobs available on the server along with their job name, job URL, last build number, last build result, and Jenkins status color (blue, red, yellow, disabled, etc.).
 
-### 3. Get Build Log
+### 3. list_recent_failed_jobs
 
-Retrieve the console output of a Jenkins build:
+Returns a list of Jenkins jobs whose most recent build failed. The results are sorted by the most recent failure time and can be limited to a specific number of jobs.
 
-```typescript
-// Example usage
-const result = await mcpClient.useTool("jenkins-server", "get_build_log", {
-  jobPath: "view/xxx_debug",
-  buildNumber: "lastBuild"
-});
-```
+### 4. count_failed_jobs
 
-Input Schema:
-```json
-{
-  "jobPath": "string",  // Path to Jenkins job
-  "buildNumber": "string"  // Build number or "lastBuild"
-}
-```
+Counts how many Jenkins jobs currently have their last build in a FAILURE state. Useful for quick health checks of the Jenkins instance.
+
+### 5. get_failed_build_log
+
+Fetches the console output of the last failed build for a specified Jenkins job. If no failed builds exist, the tool reports that clearly.
+
+### 6. trigger_build
+
+Triggers a new Jenkins build for a given job.
+
+  * Uses /build for jobs without parameters.
+
+  * Uses /buildWithParameters when parameters are provided.
+    Automatically handles Jenkins CSRF (crumb) protection.
+
+### 7. get_build_log
+
+Retrieves the full console output of a specific Jenkins build, including support for fetching logs from the latest build.
+
+### 8. create_jenkins_user
+
+Creates a new Jenkins user in the internal Jenkins user database. This operation requires administrative permissions and supports setting username, password, full name, and email.
 
 ## Development
 
