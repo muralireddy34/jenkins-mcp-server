@@ -6,8 +6,8 @@ A Model Context Protocol (MCP) server that provides tools for interacting with J
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/hekmon8/jenkins-server-mcp.git
-cd jenkins-server-mcp
+git clone https://github.com/iamishaan24/jenkins-mcp-server.git
+cd jenkins-mcp-server
 ```
 
 2. Install dependencies:
