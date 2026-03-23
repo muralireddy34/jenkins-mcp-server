@@ -1,0 +1,10 @@
+    "svn": {
+      "command": "cmd",
+      "args": ["/c", "npx", "@grec0/mcp-svn"],
+      "env": {
+        "SVN_PATH": "svn",
+        "SVN_WORKING_DIRECTORY": "C:\\Repositories",
+        "SVN_URL": "https://desktop-b6p7orp/svn/mcp_test/",
+        "SVN_USERNAME": "admin",
+        "SVN_PASSWORD": "admin"
+      }
